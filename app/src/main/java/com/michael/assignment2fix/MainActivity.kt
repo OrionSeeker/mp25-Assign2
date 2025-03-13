@@ -48,26 +48,24 @@ class MainActivity : AppCompatActivity() {
         clueText.setText("Clue: " + clue[lastImg])
 
         submitBtn.setOnClickListener(){
-            var currIdx: Int = lastImg
-            var idx: Int
-            do{
-                idx = Random.nextInt(img.size)
-            }
-            while(idx==lastImg)
-            lastImg = idx
-            imageView.setImageResource(img[idx])
-            clueText.setText("Clue: " + clue[idx])
 
-
-            var isCorrect: Boolean = inputJawaban.text.toString().trim().equals(jawaban[currIdx], ignoreCase = true)
+            var isCorrect: Boolean = inputJawaban.text.toString().trim().equals(jawaban[lastImg], ignoreCase = true)
 
             val windowHasil = AlertDialog.Builder(this)
                 .setTitle(if (isCorrect) "Jawaban kamu Benar YEAYYYYYY!" else "Jawaban Salah :(")
-                .setMessage("Jawaban: "+ jawaban[currIdx])
+                .setMessage("Jawaban: "+ jawaban[lastImg])
                 .setPositiveButton("OK") { windowHasil, _ ->
                     windowHasil.dismiss()
-                    currIdx = lastImg
                     inputJawaban.text.clear()
+
+                    var idx: Int
+                    do{
+                        idx = Random.nextInt(img.size)
+                    }
+                    while(idx==lastImg)
+                    lastImg = idx
+                    imageView.setImageResource(img[idx])
+                    clueText.setText("Clue: " + clue[idx])
                 }
                 .create()
 
